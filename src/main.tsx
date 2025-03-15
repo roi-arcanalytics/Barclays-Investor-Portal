@@ -5,8 +5,15 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
 
-import { TempoDevtools } from "tempo-devtools";
-TempoDevtools.init();
+// Conditionally import and initialize Tempo Devtools
+if (import.meta.env.VITE_TEMPO === "true") {
+  try {
+    const { TempoDevtools } = await import("tempo-devtools");
+    TempoDevtools.init();
+  } catch (e) {
+    console.warn("Tempo devtools not available", e);
+  }
+}
 
 const basename = import.meta.env.BASE_URL;
 

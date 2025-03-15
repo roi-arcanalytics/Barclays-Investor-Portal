@@ -8,7 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/custom-tabs";
 import { DataTable } from "@/components/data/tables/DataTable";
 import {
   FileText,
@@ -169,7 +174,7 @@ export const ReportsPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Reports</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Reports</h1>
         <Button
           disabled={selectedReports.length === 0}
           onClick={downloadSelectedReports}

@@ -4,39 +4,39 @@ import { AreaChart } from "@/components/data/charts/AreaChart";
 import { BarChart } from "@/components/data/charts/BarChart";
 import { PieChart } from "@/components/data/charts/PieChart";
 import { DataTable } from "@/components/data/tables/DataTable";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/custom-tabs";
 
 export const DashboardPage = () => {
   const [filters, setFilters] = useState({});
 
-  // Sample filter options
+  // Deal filter options based on deal names
   const filterOptions = {
-    portfolios: [
-      { label: "All Portfolios", value: "all" },
-      { label: "Mortgage-Backed", value: "mbs" },
-      { label: "Asset-Backed", value: "abs" },
-      { label: "CLOs", value: "clo" },
-    ],
-    assetClasses: [
-      { label: "All Classes", value: "all" },
-      { label: "Residential", value: "residential" },
-      { label: "Commercial", value: "commercial" },
-      { label: "Consumer", value: "consumer" },
-      { label: "Corporate", value: "corporate" },
-    ],
-    regions: [
-      { label: "All Regions", value: "all" },
-      { label: "North America", value: "na" },
-      { label: "Europe", value: "eu" },
-      { label: "Asia Pacific", value: "apac" },
-    ],
-    ratings: [
-      { label: "All Ratings", value: "all" },
-      { label: "AAA", value: "aaa" },
-      { label: "AA", value: "aa" },
-      { label: "A", value: "a" },
-      { label: "BBB", value: "bbb" },
-      { label: "BB and Below", value: "bb_below" },
+    deals: [
+      { label: "Hawksmoor Residential Mortgages plc", value: "hawksmoor" },
+      { label: "Darrowby Mortgages Limited", value: "darrowby" },
+      { label: "Lanark Master Issuer plc", value: "lanark" },
+      { label: "Gosforth Funding plc", value: "gosforth" },
+      { label: "Precise Mortgage Funding plc", value: "precise" },
+      { label: "Stratton Mortgage Funding plc", value: "stratton" },
+      { label: "Trinity Square Residential Mortgages plc", value: "trinity" },
+      { label: "Finsbury Square Mortgage Trust Limited", value: "finsbury" },
+      { label: "Sequoia Mortgage Trust REIT", value: "sequoia" },
+      { label: "Flagstar RMBS Trust", value: "flagstar" },
+      { label: "Granite Mortgage Securities plc", value: "granite" },
+      { label: "Aire Valley Mortgages plc", value: "aire" },
+      { label: "Silverstone Master Issuer plc", value: "silverstone" },
+      { label: "Permanent Master Issuer plc", value: "permanent" },
+      { label: "Holmes Master Issuer plc", value: "holmes" },
+      { label: "Progressive Building Society RMBS", value: "progressive" },
+      { label: "Shawbrook Mortgage Trust", value: "shawbrook" },
+      { label: "Skipton Covered Bond LLP", value: "skipton" },
+      { label: "Tandem Bank Mortgage Securities", value: "tandem" },
+      { label: "The Mortgage Lender Securitisation", value: "tml" },
     ],
   };
 
@@ -348,7 +348,9 @@ export const DashboardPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Portfolio Overview
+        </h1>
       </div>
 
       <FilterBar
@@ -356,8 +358,6 @@ export const DashboardPage = () => {
         filterOptions={filterOptions}
         className="p-4 bg-card rounded-lg border"
       />
-
-      <MetricsGrid />
 
       <Tabs defaultValue="overview" className="w-full">
         <TabsList>
@@ -390,7 +390,7 @@ export const DashboardPage = () => {
                 { key: "waLtv", label: "WA LTV (%)", sortable: true },
                 {
                   key: "waSeasoning",
-                  label: "WA Seasoning (Months)",
+                  label: "WA Seasoning (Years)",
                   sortable: true,
                 },
                 {
@@ -403,13 +403,16 @@ export const DashboardPage = () => {
                   label: "WA Interest Rate (%)",
                   sortable: true,
                 },
-                { key: "fixedRate", label: "% Fixed Rate", sortable: true },
+                {
+                  key: "fixedRate",
+                  label: "Floating Coupon (%)",
+                  sortable: true,
+                },
                 {
                   key: "interestOnly",
                   label: "% Interest Only",
                   sortable: true,
                 },
-                { key: "btl", label: "% BTL", sortable: true },
               ]}
               data={[
                 {
@@ -417,180 +420,165 @@ export const DashboardPage = () => {
                   loanCount: "4,521",
                   currentBalance: "£842.3M",
                   waLtv: "68.4%",
-                  waSeasoning: "24.6",
+                  waSeasoning: "2.1",
                   waRemainingTerm: "22.3",
                   waInterestRate: "3.45%",
-                  fixedRate: "72.8%",
+                  fixedRate: "3.2%",
                   interestOnly: "18.2%",
-                  btl: "24.5%",
                 },
                 {
                   dealName: "Darrowby Mortgages Limited",
                   loanCount: "3,842",
                   currentBalance: "£765.1M",
                   waLtv: "65.2%",
-                  waSeasoning: "28.3",
+                  waSeasoning: "2.4",
                   waRemainingTerm: "21.7",
                   waInterestRate: "3.62%",
-                  fixedRate: "68.4%",
+                  fixedRate: "3.5%",
                   interestOnly: "22.1%",
-                  btl: "31.2%",
                 },
                 {
                   dealName: "Lanark Master Issuer plc",
                   loanCount: "5,124",
                   currentBalance: "£924.7M",
                   waLtv: "67.8%",
-                  waSeasoning: "26.1",
+                  waSeasoning: "2.2",
                   waRemainingTerm: "23.4",
                   waInterestRate: "3.38%",
-                  fixedRate: "74.2%",
+                  fixedRate: "3.1%",
                   interestOnly: "16.8%",
-                  btl: "22.3%",
                 },
                 {
                   dealName: "Gosforth Funding plc",
                   loanCount: "4,872",
                   currentBalance: "£892.5M",
                   waLtv: "66.9%",
-                  waSeasoning: "25.8",
+                  waSeasoning: "2.2",
                   waRemainingTerm: "22.1",
                   waInterestRate: "3.51%",
-                  fixedRate: "70.5%",
+                  fixedRate: "3.3%",
                   interestOnly: "19.7%",
-                  btl: "26.8%",
                 },
                 {
                   dealName: "Precise Mortgage Funding plc",
                   loanCount: "3,956",
                   currentBalance: "£782.4M",
                   waLtv: "69.2%",
-                  waSeasoning: "22.9",
+                  waSeasoning: "1.9",
                   waRemainingTerm: "23.1",
                   waInterestRate: "3.42%",
-                  fixedRate: "73.6%",
+                  fixedRate: "3.1%",
                   interestOnly: "17.5%",
-                  btl: "25.2%",
                 },
                 {
                   dealName: "Stratton Mortgage Funding plc",
                   loanCount: "4,215",
                   currentBalance: "£815.6M",
                   waLtv: "67.1%",
-                  waSeasoning: "27.2",
+                  waSeasoning: "2.3",
                   waRemainingTerm: "21.9",
                   waInterestRate: "3.55%",
-                  fixedRate: "69.8%",
+                  fixedRate: "3.4%",
                   interestOnly: "20.4%",
-                  btl: "28.7%",
                 },
                 {
                   dealName: "Trinity Square Residential Mortgages plc",
                   loanCount: "5,342",
                   currentBalance: "£945.8M",
                   waLtv: "66.5%",
-                  waSeasoning: "25.3",
+                  waSeasoning: "2.1",
                   waRemainingTerm: "22.8",
                   waInterestRate: "3.41%",
-                  fixedRate: "71.9%",
+                  fixedRate: "3.2%",
                   interestOnly: "18.9%",
-                  btl: "23.8%",
                 },
                 {
                   dealName: "Finsbury Square Mortgage Trust Limited",
                   loanCount: "4,128",
                   currentBalance: "£803.2M",
                   waLtv: "68.9%",
-                  waSeasoning: "23.7",
+                  waSeasoning: "2.0",
                   waRemainingTerm: "22.5",
                   waInterestRate: "3.48%",
-                  fixedRate: "72.1%",
+                  fixedRate: "3.2%",
                   interestOnly: "19.3%",
-                  btl: "25.1%",
                 },
                 {
                   dealName: "Sequoia Mortgage Trust REIT",
                   loanCount: "6,235",
                   currentBalance: "£1,125.4M",
                   waLtv: "65.8%",
-                  waSeasoning: "29.4",
+                  waSeasoning: "2.5",
                   waRemainingTerm: "21.2",
                   waInterestRate: "3.65%",
-                  fixedRate: "67.3%",
+                  fixedRate: "3.6%",
                   interestOnly: "23.5%",
-                  btl: "32.8%",
                 },
                 {
                   dealName: "Flagstar RMBS Trust",
                   loanCount: "5,872",
                   currentBalance: "£1,052.6M",
                   waLtv: "66.2%",
-                  waSeasoning: "28.1",
+                  waSeasoning: "2.3",
                   waRemainingTerm: "21.5",
                   waInterestRate: "3.58%",
-                  fixedRate: "68.9%",
+                  fixedRate: "3.4%",
                   interestOnly: "21.7%",
-                  btl: "30.5%",
                 },
                 {
                   dealName: "Granite Mortgage Securities plc",
                   loanCount: "4,756",
                   currentBalance: "£875.3M",
                   waLtv: "67.5%",
-                  waSeasoning: "25.2",
+                  waSeasoning: "2.1",
                   waRemainingTerm: "22.6",
                   waInterestRate: "3.43%",
-                  fixedRate: "73.2%",
+                  fixedRate: "3.1%",
                   interestOnly: "17.8%",
-                  btl: "24.1%",
                 },
                 {
                   dealName: "Aire Valley Mortgages plc",
                   loanCount: "4,325",
                   currentBalance: "£825.9M",
                   waLtv: "68.1%",
-                  waSeasoning: "24.9",
+                  waSeasoning: "2.1",
                   waRemainingTerm: "22.4",
                   waInterestRate: "3.47%",
-                  fixedRate: "72.5%",
+                  fixedRate: "3.2%",
                   interestOnly: "18.5%",
-                  btl: "24.8%",
                 },
                 {
                   dealName: "Silverstone Master Issuer plc",
                   loanCount: "5,218",
                   currentBalance: "£935.2M",
                   waLtv: "67.3%",
-                  waSeasoning: "26.5",
+                  waSeasoning: "2.2",
                   waRemainingTerm: "22.1",
                   waInterestRate: "3.44%",
-                  fixedRate: "73.5%",
+                  fixedRate: "3.1%",
                   interestOnly: "17.2%",
-                  btl: "23.1%",
                 },
                 {
                   dealName: "Permanent Master Issuer plc",
                   loanCount: "5,645",
                   currentBalance: "£985.7M",
                   waLtv: "66.8%",
-                  waSeasoning: "27.3",
+                  waSeasoning: "2.3",
                   waRemainingTerm: "21.8",
                   waInterestRate: "3.52%",
-                  fixedRate: "70.1%",
+                  fixedRate: "3.3%",
                   interestOnly: "20.8%",
-                  btl: "27.5%",
                 },
                 {
                   dealName: "Holmes Master Issuer plc",
                   loanCount: "4,982",
                   currentBalance: "£912.4M",
                   waLtv: "67.6%",
-                  waSeasoning: "25.7",
+                  waSeasoning: "2.1",
                   waRemainingTerm: "22.2",
                   waInterestRate: "3.46%",
-                  fixedRate: "72.3%",
+                  fixedRate: "3.2%",
                   interestOnly: "18.7%",
-                  btl: "24.2%",
                 },
               ]}
             />

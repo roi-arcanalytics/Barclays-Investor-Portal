@@ -1,36 +1,44 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  BarChart as RechartsBarChart,
+  ComposedChart,
   Bar,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
+  Legend,
   ResponsiveContainer,
 } from "recharts";
 
-interface BarChartProps {
+interface DualBarLineChartProps {
   title: string;
-  data?: any[];
-  xAxis?: string;
-  yAxis?: string;
-  dataKey?: string;
-  color?: string;
+  data: any[];
+  barKey: string;
+  barName: string;
+  barColor: string;
+  lineKey: string;
+  lineName: string;
+  lineColor: string;
+  xAxisKey?: string;
   height?: number;
   className?: string;
 }
 
-export const BarChart = ({
+export const DualBarLineChart = ({
   title,
   data = [],
-  xAxis = "category",
-  yAxis = "value",
-  dataKey = "value",
-  color = "hsl(var(--primary))",
+  barKey,
+  barName,
+  barColor,
+  lineKey,
+  lineName,
+  lineColor,
+  xAxisKey = "date",
   height = 300,
   className = "",
-}: BarChartProps) => {
+}: DualBarLineChartProps) => {
   const formatYAxis = (value: number) => {
     if (value >= 1000000000) {
       return `£${(value / 1000000000).toFixed(1)}bn`;
@@ -51,13 +59,13 @@ export const BarChart = ({
         {data.length > 0 ? (
           <div style={{ height: `${height}px`, width: "100%" }}>
             <ResponsiveContainer width="100%" height="100%">
-              <RechartsBarChart
+              <ComposedChart
                 data={data}
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis
-                  dataKey={xAxis}
+                  dataKey={xAxisKey}
                   tick={{ fontSize: 12 }}
                   stroke="#9ca3af"
                 />
@@ -77,8 +85,23 @@ export const BarChart = ({
                       "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
                   }}
                 />
-                <Bar dataKey={dataKey} fill={color} radius={[4, 4, 0, 0]} />
-              </RechartsBarChart>
+                <Legend />
+                <Bar
+                  dataKey={barKey}
+                  name={barName}
+                  fill={barColor}
+                  radius={[4, 4, 0, 0]}
+                />
+                <Line
+                  type="monotone"
+                  dataKey={lineKey}
+                  name={lineName}
+                  stroke={lineColor}
+                  strokeWidth={2}
+                  dot={{ r: 0 }}
+                  activeDot={{ r: 6 }}
+                />
+              </ComposedChart>
             </ResponsiveContainer>
           </div>
         ) : (
@@ -86,14 +109,7 @@ export const BarChart = ({
             className="bg-muted/30 rounded-md flex items-center justify-center"
             style={{ height: `${height}px` }}
           >
-            <p className="text-muted-foreground text-sm">
-              Bar Chart Visualization
-            </p>
-            {data.length === 0 && (
-              <p className="text-muted-foreground text-xs mt-2">
-                No data available
-              </p>
-            )}
+            <p className="text-muted-foreground text-sm">No data available</p>
           </div>
         )}
       </CardContent>

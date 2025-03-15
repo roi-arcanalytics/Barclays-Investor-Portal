@@ -26,7 +26,7 @@ export const HeatMap = ({
   return (
     <Card className={className}>
       <CardHeader className="pb-2">
-        <CardTitle className="text-md font-medium">{title}</CardTitle>
+        <CardTitle className="text-lg font-medium">{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <div

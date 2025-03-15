@@ -4,26 +4,40 @@ import { LineChart } from "@/components/data/charts/LineChart";
 import { HeatMap } from "@/components/data/charts/HeatMap";
 import { ScatterPlot } from "@/components/data/charts/ScatterPlot";
 import { DataTable } from "@/components/data/tables/DataTable";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/custom-tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const MarketPage = () => {
   const [filters, setFilters] = useState({});
 
-  // Sample filter options
+  // Deal filter options based on deal names
   const filterOptions = {
-    assetClasses: [
-      { label: "All Classes", value: "all" },
-      { label: "Residential", value: "residential" },
-      { label: "Commercial", value: "commercial" },
-      { label: "Consumer", value: "consumer" },
-      { label: "Corporate", value: "corporate" },
-    ],
-    regions: [
-      { label: "All Regions", value: "all" },
-      { label: "North America", value: "na" },
-      { label: "Europe", value: "eu" },
-      { label: "Asia Pacific", value: "apac" },
+    deals: [
+      { label: "Hawksmoor Residential Mortgages plc", value: "hawksmoor" },
+      { label: "Darrowby Mortgages Limited", value: "darrowby" },
+      { label: "Lanark Master Issuer plc", value: "lanark" },
+      { label: "Gosforth Funding plc", value: "gosforth" },
+      { label: "Precise Mortgage Funding plc", value: "precise" },
+      { label: "Stratton Mortgage Funding plc", value: "stratton" },
+      { label: "Trinity Square Residential Mortgages plc", value: "trinity" },
+      { label: "Finsbury Square Mortgage Trust Limited", value: "finsbury" },
+      { label: "Sequoia Mortgage Trust REIT", value: "sequoia" },
+      { label: "Flagstar RMBS Trust", value: "flagstar" },
+      { label: "Granite Mortgage Securities plc", value: "granite" },
+      { label: "Aire Valley Mortgages plc", value: "aire" },
+      { label: "Silverstone Master Issuer plc", value: "silverstone" },
+      { label: "Permanent Master Issuer plc", value: "permanent" },
+      { label: "Holmes Master Issuer plc", value: "holmes" },
+      { label: "Progressive Building Society RMBS", value: "progressive" },
+      { label: "Shawbrook Mortgage Trust", value: "shawbrook" },
+      { label: "Skipton Covered Bond LLP", value: "skipton" },
+      { label: "Tandem Bank Mortgage Securities", value: "tandem" },
+      { label: "The Mortgage Lender Securitisation", value: "tml" },
     ],
   };
 
@@ -77,7 +91,7 @@ export const MarketPage = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">Market Analytics</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Market Analytics</h1>
       </div>
 
       <FilterBar

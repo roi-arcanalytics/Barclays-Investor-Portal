@@ -11,6 +11,8 @@ import {
   Settings,
   Users,
   AlertTriangle,
+  Shield,
+  ArrowLeft,
 } from "lucide-react";
 
 interface SidebarLinkProps {
@@ -26,7 +28,9 @@ const SidebarLink = ({ to, icon, label }: SidebarLinkProps) => {
       className={({ isActive }) =>
         cn(
           "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:text-primary",
-          isActive ? "bg-primary/10 text-white font-medium" : "text-white",
+          isActive
+            ? "bg-primary/10 text-white font-medium underline underline-offset-4"
+            : "text-white",
         )
       }
     >
@@ -41,12 +45,9 @@ export const Sidebar = () => {
     <div className="hidden border-r bg-black lg:block lg:w-64">
       <div className="flex h-full flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4">
-          <NavLink
-            to="/"
-            className="flex items-center gap-2 font-semibold text-white"
-          >
-            <BarChart3 className="h-6 w-6 text-white" />
-            <span>ARC Analytics</span>
+          <NavLink to="/" className="flex items-center gap-2 text-white">
+            <ArrowLeft className="h-4 w-4" />
+            <span>Return to Dashboard</span>
           </NavLink>
         </div>
         <div className="flex-1 overflow-auto py-2 px-4">
@@ -80,6 +81,11 @@ export const Sidebar = () => {
               to="/alerts"
               icon={<AlertTriangle className="h-4 w-4" />}
               label="Alerts"
+            />
+            <SidebarLink
+              to="/compliance"
+              icon={<Shield className="h-4 w-4" />}
+              label="Compliance"
             />
           </div>
           <div className="mt-6 pt-6 border-t border-white/20">

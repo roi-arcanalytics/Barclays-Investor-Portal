@@ -16,9 +16,7 @@ export const Header = () => {
     <header className="border-b bg-card">
       <div className="flex h-16 items-center px-6">
         <div className="flex items-center gap-4 lg:gap-6">
-          <h1 className="text-xl font-semibold">
-            Structured Finance Dashboard
-          </h1>
+          <h1 className="text-xl font-semibold">Barclays Investor Portal</h1>
         </div>
 
         <div className="ml-auto flex items-center gap-4">
@@ -34,14 +32,15 @@ export const Header = () => {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage
-                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=finance"
-                    alt="User"
-                  />
-                  <AvatarFallback>JD</AvatarFallback>
-                </Avatar>
+              <Button
+                variant="ghost"
+                className="relative h-8 w-8 rounded-full bg-primary/10"
+              >
+                <img
+                  src="/barclays-logo.svg"
+                  alt="Barclays Logo"
+                  className="h-8 w-8 object-contain"
+                />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="end" forceMount>

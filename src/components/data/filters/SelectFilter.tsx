@@ -24,12 +24,18 @@ export const SelectFilter = ({
 }: SelectFilterProps) => {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className={`w-[180px] h-9 ${className}`}>
+      <SelectTrigger
+        className={`w-[180px] h-9 text-sm font-normal ${className}`}
+      >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
         {options.map((option) => (
-          <SelectItem key={option.value} value={option.value}>
+          <SelectItem
+            key={option.value}
+            value={option.value}
+            className="font-normal"
+          >
             {option.label}
           </SelectItem>
         ))}

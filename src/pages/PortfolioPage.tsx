@@ -3,41 +3,138 @@ import { FilterBar } from "@/components/data/filters/FilterBar";
 import { PieChart } from "@/components/data/charts/PieChart";
 import { BarChart } from "@/components/data/charts/BarChart";
 import { LineChart } from "@/components/data/charts/LineChart";
+import { DealBalanceChart } from "@/components/data/charts/DealBalanceChart";
+import { DualBarLineChart } from "@/components/data/charts/DualBarLineChart";
 import { DataTable } from "@/components/data/tables/DataTable";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/custom-tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const PortfolioPage = () => {
   const [filters, setFilters] = useState({});
+  const [multiDealFilters, setMultiDealFilters] = useState({});
 
-  // Sample filter options
+  // Data for Deal 2021-2 Tranche C Interest Due vs Paid chart
+  const trancheCInterestData = [
+    { date: "2021 Q2", interestDue: 1627500, interestPaid: 1627500 },
+    { date: "2021 Q4", interestDue: 1720250, interestPaid: 1720250 },
+    { date: "2022 Q2", interestDue: 1456000, interestPaid: 1456000 },
+    { date: "2022 Q4", interestDue: 1471750, interestPaid: 1471750 },
+    { date: "2023 Q2", interestDue: 1545250, interestPaid: 1545250 },
+    { date: "2023 Q4", interestDue: 1510250, interestPaid: 1510250 },
+    { date: "2024 Q2", interestDue: 1410500, interestPaid: 1344000 },
+    { date: "2024 Q4", interestDue: 1732500, interestPaid: 980000 },
+  ];
+
+  // Data for Note Principal Payments chart
+  const notePrincipalPaymentsData = [
+    { date: "2021 Q4", value: 351053775 },
+    { date: "2022 Q2", value: 495789775 },
+    { date: "2022 Q4", value: 622158800 },
+    { date: "2023 Q2", value: 459263775 },
+    { date: "2023 Q4", value: 588517100 },
+    { date: "2024 Q2", value: 553910475 },
+    { date: "2024 Q4", value: 329783675 },
+  ];
+
+  // Data for Overall Portfolio Interest Due vs Paid chart
+  const portfolioInterestData = [
+    { date: "2021 Q4", interestDue: 53327750, interestPaid: 49594807.5 },
+    { date: "2022 Q2", interestDue: 45136000, interestPaid: 43781920 },
+    { date: "2022 Q4", interestDue: 45624250, interestPaid: 42430552.5 },
+    { date: "2023 Q2", interestDue: 47902750, interestPaid: 44070536 },
+    { date: "2023 Q4", interestDue: 46817750, interestPaid: 42334752.5 },
+    { date: "2024 Q2", interestDue: 43725500, interestPaid: 40227460 },
+    { date: "2024 Q4", interestDue: 53707500, interestPaid: 48336750 },
+  ];
+
+  // Data for Deal 2021-2 Collateral & Tranche Balances chart
+  const dealBalanceData = [
+    {
+      date: "2021 Q2",
+      collateralBalance: 450000000,
+      trancheA: 290000000,
+      trancheB: 100000000,
+      trancheC: 35000000,
+    },
+    {
+      date: "2021 Q4",
+      collateralBalance: 435957849,
+      trancheA: 280144000,
+      trancheB: 100000000,
+      trancheC: 35000000,
+    },
+    {
+      date: "2022 Q2",
+      collateralBalance: 416126258,
+      trancheA: 264588323,
+      trancheB: 100000000,
+      trancheC: 35000000,
+    },
+    {
+      date: "2022 Q4",
+      collateralBalance: 391239906,
+      trancheA: 249032646,
+      trancheB: 100000000,
+      trancheC: 35000000,
+    },
+    {
+      date: "2023 Q2",
+      collateralBalance: 372869355,
+      trancheA: 235541095,
+      trancheB: 100000000,
+      trancheC: 35000000,
+    },
+    {
+      date: "2023 Q4",
+      collateralBalance: 349328671,
+      trancheA: 213879411,
+      trancheB: 100000000,
+      trancheC: 35000000,
+    },
+    {
+      date: "2024 Q2",
+      collateralBalance: 327172252,
+      trancheA: 199601892,
+      trancheB: 100000000,
+      trancheC: 35000000,
+    },
+    {
+      date: "2024 Q4",
+      collateralBalance: 313980905,
+      trancheA: 188289645,
+      trancheB: 100000000,
+      trancheC: 35000000,
+    },
+  ];
+
+  // Deal filter options based on deal names from Portfolio Overview page
   const filterOptions = {
-    portfolios: [
-      { label: "All Portfolios", value: "all" },
-      { label: "Mortgage-Backed", value: "mbs" },
-      { label: "Asset-Backed", value: "abs" },
-      { label: "CLOs", value: "clo" },
-    ],
-    assetClasses: [
-      { label: "All Classes", value: "all" },
-      { label: "Residential", value: "residential" },
-      { label: "Commercial", value: "commercial" },
-      { label: "Consumer", value: "consumer" },
-      { label: "Corporate", value: "corporate" },
-    ],
-    regions: [
-      { label: "All Regions", value: "all" },
-      { label: "North America", value: "na" },
-      { label: "Europe", value: "eu" },
-      { label: "Asia Pacific", value: "apac" },
-    ],
-    ratings: [
-      { label: "All Ratings", value: "all" },
-      { label: "AAA", value: "aaa" },
-      { label: "AA", value: "aa" },
-      { label: "A", value: "a" },
-      { label: "BBB", value: "bbb" },
-      { label: "BB and Below", value: "bb_below" },
+    deals: [
+      { label: "Hawksmoor Residential Mortgages plc", value: "hawksmoor" },
+      { label: "Darrowby Mortgages Limited", value: "darrowby" },
+      { label: "Lanark Master Issuer plc", value: "lanark" },
+      { label: "Gosforth Funding plc", value: "gosforth" },
+      { label: "Precise Mortgage Funding plc", value: "precise" },
+      { label: "Stratton Mortgage Funding plc", value: "stratton" },
+      { label: "Trinity Square Residential Mortgages plc", value: "trinity" },
+      { label: "Finsbury Square Mortgage Trust Limited", value: "finsbury" },
+      { label: "Sequoia Mortgage Trust REIT", value: "sequoia" },
+      { label: "Flagstar RMBS Trust", value: "flagstar" },
+      { label: "Granite Mortgage Securities plc", value: "granite" },
+      { label: "Aire Valley Mortgages plc", value: "aire" },
+      { label: "Silverstone Master Issuer plc", value: "silverstone" },
+      { label: "Permanent Master Issuer plc", value: "permanent" },
+      { label: "Holmes Master Issuer plc", value: "holmes" },
+      { label: "Progressive Building Society RMBS", value: "progressive" },
+      { label: "Shawbrook Mortgage Trust", value: "shawbrook" },
+      { label: "Skipton Covered Bond LLP", value: "skipton" },
+      { label: "Tandem Bank Mortgage Securities", value: "tandem" },
+      { label: "The Mortgage Lender Securitisation", value: "tml" },
     ],
   };
 
@@ -101,20 +198,16 @@ export const PortfolioPage = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight">
-          Portfolio Analysis
-        </h1>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Portfolio Analysis
+          </h1>
+        </div>
       </div>
 
-      <FilterBar
-        onFilterChange={setFilters}
-        filterOptions={filterOptions}
-        className="p-4 bg-card rounded-lg border"
-      />
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
         <div className="rounded-lg border bg-card p-4">
           <div className="text-sm font-medium text-muted-foreground">
             Total Investment Value
@@ -153,89 +246,101 @@ export const PortfolioPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-md font-medium">
-              Portfolio Summary
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">
-                  Total Value:
-                </span>
-                <span className="text-sm font-medium">$5,750,000</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">
-                  Number of Securities:
-                </span>
-                <span className="text-sm font-medium">5</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">
-                  Average Yield:
-                </span>
-                <span className="text-sm font-medium">4.69%</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">
-                  Average Maturity:
-                </span>
-                <span className="text-sm font-medium">15.2 years</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">
-                  Average Rating:
-                </span>
-                <span className="text-sm font-medium">AA+</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <PieChart title="Asset Type Allocation" height={200} />
-
-        <PieChart title="Rating Distribution" height={200} />
-      </div>
-
       <Tabs defaultValue="composition" className="w-full">
         <TabsList>
-          <TabsTrigger value="composition">Composition</TabsTrigger>
-          <TabsTrigger value="performance">Performance</TabsTrigger>
-          <TabsTrigger value="cashflows">Cashflows</TabsTrigger>
-          <TabsTrigger value="comparison">Comparison</TabsTrigger>
+          <TabsTrigger value="composition">Deal Performance</TabsTrigger>
+          <TabsTrigger value="performance">Collateral Performance</TabsTrigger>
+          <TabsTrigger value="cashflows">
+            Collateral Stratifications
+          </TabsTrigger>
+          <TabsTrigger value="comparison">Collateral Risk Metrics</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="composition" className="space-y-4 pt-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <BarChart title="Allocation by Asset Type" height={250} />
-            <BarChart title="Allocation by Rating" height={250} />
-          </div>
-          <DataTable
-            title="Portfolio Holdings"
-            columns={columns}
-            data={tableData}
+        <TabsContent value="composition" className="space-y-8 pt-6">
+          <h2 className="text-2xl font-semibold tracking-tight mb-6">
+            Deal by Deal Analysis
+          </h2>
+          <FilterBar
+            onFilterChange={setFilters}
+            filterOptions={filterOptions}
+            className="p-4 bg-card rounded-lg border mb-6"
           />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <DealBalanceChart
+              title="Collateral & Tranche Balances Overtime"
+              height={250}
+              data={dealBalanceData}
+              lines={[
+                {
+                  name: "Asset Collateral Balance",
+                  dataKey: "collateralBalance",
+                  color: "#00aeef",
+                },
+                { name: "Tranche A", dataKey: "trancheA", color: "#001276" },
+                { name: "Tranche B", dataKey: "trancheB", color: "#727272" },
+                { name: "Tranche C", dataKey: "trancheC", color: "#000000" },
+              ]}
+            />
+            <DualBarLineChart
+              title="Interest Due vs Paid"
+              height={250}
+              data={trancheCInterestData}
+              barKey="interestDue"
+              barName="Tranche C - Interest Due"
+              barColor="#d3d3d3"
+              lineKey="interestPaid"
+              lineName="Tranche C - Interest Paid"
+              lineColor="#00aeef"
+            />
+          </div>
+
+          <h2 className="text-2xl font-semibold tracking-tight mb-6">
+            Multi-Deal Analysis
+          </h2>
+          <FilterBar
+            onFilterChange={setMultiDealFilters}
+            filterOptions={filterOptions}
+            className="p-4 bg-card rounded-lg border mb-6"
+            multiSelect={true}
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <BarChart
+              title="Note Principal Payments"
+              height={250}
+              data={notePrincipalPaymentsData}
+              xAxis="date"
+              dataKey="value"
+              color="#d3d3d3"
+            />
+            <DualBarLineChart
+              title="Interest Due vs Paid"
+              height={250}
+              data={portfolioInterestData}
+              barKey="interestDue"
+              barName="Interest Due"
+              barColor="#d3d3d3"
+              lineKey="interestPaid"
+              lineName="Interest Paid"
+              lineColor="#00aeef"
+            />
+          </div>
         </TabsContent>
 
-        <TabsContent value="performance" className="space-y-4 pt-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <TabsContent value="performance" className="space-y-8 pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <LineChart title="Historical Performance" height={250} />
             <BarChart title="Performance by Asset Type" height={250} />
           </div>
           <LineChart title="Cumulative Returns vs Benchmark" height={300} />
         </TabsContent>
 
-        <TabsContent value="cashflows" className="space-y-4 pt-4">
+        <TabsContent value="cashflows" className="space-y-8 pt-6">
           <LineChart title="Projected Cashflows" height={300} />
           <BarChart title="Monthly Cashflow Projection" height={300} />
         </TabsContent>
 
-        <TabsContent value="comparison" className="space-y-4 pt-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <TabsContent value="comparison" className="space-y-8 pt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <LineChart title="Portfolio vs Benchmark" height={250} />
             <BarChart title="Relative Performance" height={250} />
           </div>

@@ -97,7 +97,7 @@ export const DataTable = ({
     <Card className={className}>
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
-          <CardTitle className="text-md font-medium">{title}</CardTitle>
+          <CardTitle className="text-lg font-medium">{title}</CardTitle>
           <div className="flex gap-2">
             {searchable && (
               <div className="relative">
